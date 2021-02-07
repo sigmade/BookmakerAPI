@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookmakerAPI.Models;
@@ -35,7 +33,7 @@ namespace BookmakerAPI.Controllers
 
             if (team == null)
             {
-                return NotFound();
+                return new JsonResult("Команда с таким ID не найдена");
             }
 
             return team;
@@ -43,7 +41,7 @@ namespace BookmakerAPI.Controllers
 
         // PUT: api/Teams/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTeam(int id, Team team)
+        public async Task<IActionResult> UpdateTeam(int id, Team team)
         {
             if (id != team.TeamId)
             {
@@ -73,12 +71,12 @@ namespace BookmakerAPI.Controllers
 
         // POST: api/Teams
         [HttpPost]
-        public async Task<ActionResult<Team>> PostTeam(Team team)
+        public async Task<ActionResult<Team>> CreateTeam(Team team)
         {
             _context.Teams.Add(team);
             await _context.SaveChangesAsync();
 
-            return new JsonResult("Успешно добавлено");
+            return new JsonResult("Команда добавлена");
         }
 
         // DELETE: api/Teams/5
@@ -94,7 +92,7 @@ namespace BookmakerAPI.Controllers
             _context.Teams.Remove(team);
             await _context.SaveChangesAsync();
 
-            return team;
+            return new JsonResult("Команда удалена");
         }
 
         private bool TeamExists(int id)

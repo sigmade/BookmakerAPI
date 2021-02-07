@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookmakerAPI.Models;
@@ -37,7 +35,7 @@ namespace BookmakerAPI.Controllers
 
             if (player == null)
             {
-                return NotFound();
+                return new JsonResult("Игрок с таким ID не найден");
             }
 
             return player;
@@ -45,7 +43,7 @@ namespace BookmakerAPI.Controllers
 
         // PUT: api/Players/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlayer(int id, Player player)
+        public async Task<IActionResult> UpdatePlayer(int id, Player player)
         {
             if (id != player.PlayerId)
             {
@@ -75,7 +73,7 @@ namespace BookmakerAPI.Controllers
 
         // POST: api/Players
         [HttpPost]
-        public async Task<ActionResult<Player>> AddPlayer(Player player)
+        public async Task<ActionResult<Player>> CreatePlayer(Player player)
         {
             _context.Players.Add(player);
             await _context.SaveChangesAsync();
@@ -96,7 +94,7 @@ namespace BookmakerAPI.Controllers
             _context.Players.Remove(player);
             await _context.SaveChangesAsync();
 
-            return new JsonResult("Удален");
+            return new JsonResult("Игрок удален");
         }
 
         private bool PlayerExists(int id)

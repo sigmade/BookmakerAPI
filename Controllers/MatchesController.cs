@@ -34,7 +34,7 @@ namespace BookmakerAPI.Controllers
 
             if (match == null)
             {
-                return NotFound();
+                return new JsonResult("Матч с таким ID не найден");
             }
 
             return match;
@@ -42,7 +42,7 @@ namespace BookmakerAPI.Controllers
 
         // PUT: api/Matches/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMatch(int id, Match match)
+        public async Task<IActionResult> UpdateMatch(int id, Match match)
         {
             if (id != match.MatchId)
             {
@@ -67,17 +67,17 @@ namespace BookmakerAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return new JsonResult("Данные изменены");
         }
 
         // POST: api/Matches
         [HttpPost]
-        public async Task<ActionResult<Match>> PostMatch(Match match)
+        public async Task<ActionResult<Match>> CreateMatch(Match match)
         {
             _context.Matches.Add(match);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMatch", new { id = match.MatchId }, match);
+            return new JsonResult("Матч добавлен");
         }
 
         // DELETE: api/Matches/5
@@ -93,7 +93,7 @@ namespace BookmakerAPI.Controllers
             _context.Matches.Remove(match);
             await _context.SaveChangesAsync();
 
-            return match;
+            return new JsonResult("Матч удален");
         }
 
         private bool MatchExists(int id)
