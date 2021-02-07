@@ -39,8 +39,10 @@ namespace BookmakerAPI
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            services.AddDbContext<BookmakerDBContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<BookmakerDBContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("MSSQLConnection")));
+            services.AddDbContext<BookmakerDBContext>(p =>
+            p.UseNpgsql(Configuration.GetConnectionString("PgConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
