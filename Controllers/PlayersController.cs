@@ -24,7 +24,6 @@ namespace BookmakerAPI.Controllers
         {
             var players = _context.Players.Include(u => u.Team);
             return await players.ToListAsync();
-           // return await _context.Players.ToListAsync();
         }
 
         // GET: api/Players/5
