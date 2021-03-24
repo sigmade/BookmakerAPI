@@ -100,7 +100,7 @@ namespace BookmakerAPI.Controllers
         {
             return _context.Matches.Any(e => e.MatchId == id);
         }
-
+        [HttpGet]
         [Route("GetTeamName")]
         public JsonResult GetTeamName()
         {
